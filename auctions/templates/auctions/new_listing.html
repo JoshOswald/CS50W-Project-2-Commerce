@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Create New Listing</h2>
+
+    {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+
+        <form action="{% url 'new_listing' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ form }}
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </div>
+        </form>
+
+    {% else %}
+        I am sorry but you must be logged in to create a new listing.
+        <br>
+        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    {% endif %}
+
+{% endblock %}

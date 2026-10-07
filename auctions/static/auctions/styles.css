@@ -1,0 +1,46 @@
+body {
+    padding: 10px;
+}
+
+.index-img {
+    max-width: 25vw;
+    max-height: 25vw;
+}
+
+.listing-name {
+    text-decoration: none;
+}
+
+.index-listing {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+div.index-listing-container {
+    max-width: 30vw;
+    max-height: 30vw;
+    background-color: rgb(208, 223, 247);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    margin: 20px;
+}
+
+div.index-listing-container:hover {
+    border-color: #3498db;
+}
+
+.listing-created-date {
+    color: grey;
+    font-size: 12px;
+}
+
+.listing-text {
+    color: black;
+}
+
+a.fill-div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}

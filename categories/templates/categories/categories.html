@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <div>
+        <ul>
+            {% for value, label in item_types %}
+                <li>
+                    <a href="{% url 'categories:categories_listings' value %}">{{ label }}</a>
+                </li>
+            {% endfor%}
+        </ul>
+    </div>
+
+{% endblock %}

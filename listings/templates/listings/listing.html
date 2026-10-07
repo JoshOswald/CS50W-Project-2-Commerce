@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <div>
+        <div class="index-listing">
+            <h2 class="listing-text">{{ item.item_name }}</h2>
+            <p class="listing-created-date">Listing last updated on {{ item.item_posted_time }}</p>
+            {% if item.item_image_link %}
+                <img class="index-img" src="{{ item.item_image_link }}">
+            {% endif %}
+            <p class="listing-text"><b>Price:</b> ${{ item.item_current_bid }}<br>{{ item.itemdescription.item_description }}</p>
+            {{ item.get_item_type_display }}
+        </div>
+    </div>
+
+{% endblock %}
