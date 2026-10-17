@@ -44,3 +44,30 @@ a.fill-div {
     width: 100%;
     text-decoration: none;
 }
+
+/* Hide spin buttons for Chrome, Safari, Edge, and Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spin buttons for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+.comment-box {
+    width: 30vw;
+    height: 50px !important;
+}
+
+.form-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.comment-form-container {
+    padding-bottom: 20px;
+}

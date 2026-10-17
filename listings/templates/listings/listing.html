@@ -2,16 +2,105 @@
 
 {% block body %}
 
-    <div>
-        <div class="index-listing">
-            <h2 class="listing-text">{{ item.item_name }}</h2>
-            <p class="listing-created-date">Listing last updated on {{ item.item_posted_time }}</p>
-            {% if item.item_image_link %}
-                <img class="index-img" src="{{ item.item_image_link }}">
-            {% endif %}
-            <p class="listing-text"><b>Price:</b> ${{ item.item_current_bid }}<br>{{ item.itemdescription.item_description }}</p>
-            {{ item.get_item_type_display }}
+    {% if item.item_sold %}
+        <div class="alert alert-warning" role="alert">
+            This Listing Has Ended.
         </div>
-    </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <h2 class="listing-text"><b>{{ item.item_name }}</b></h2>
+    <p class="listing-created-date" style="padding-bottom: 0;">Listing uploaded on {{ item.item_posted_time }}<br>
+    Listing last updated on {{ item.item_last_updated }}</p>
+
+    {% if item.item_image_link %}
+        <img class="index-img" src="{{ item.item_image_link }}">
+    {% endif %}
+
+    <p>{{ item.itemdescription.item_description }}</p>
+
+    <b>Category:</b> {{ item.get_item_type_display }}
+
+    {% if item.item_current_bid is None %}
+        <p class="listing-text">Starting Bid:<span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ item.item_starting_bid }}</b></span></p>
+    {% else %}
+        <p class="listing-text"><h2><b>${{ item.item_current_bid }}</b></h2>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+
+        {% if closeListing %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="closeListing" value="True">Close Listing</button>
+            </form>
+        {% endif %}
+
+        {% if bidForm and item.item_sold == False %}
+            <div class="form-container">
+                <form action="{% url 'listings:listing' item.id %}" method="post">
+                    {% csrf_token %}
+                
+                        <div class="form-group">
+                            {{ bidForm.bid }}
+                        </div>
+
+                        <input class="btn btn-primary" type="submit" value="Place Bid">
+                </form>
+            </div>
+        {% endif %}
+
+        {% if item.item_sold and user.id == max_bid.user.id %}
+            <p class="listing-text">Congrats {{ user.username }}, you have won the listing for:<span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ max_bid.bid }}</b></span></p>
+        {% elif item.item_sold %}
+           <p class="listing-text">Final Sale Price:<span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ max_bid.bid }}</b></span></p>
+        {% endif %}
+
+        {% if wishListForm %}
+            <form method="post">
+            {% csrf_token %}
+            {% if wishListed == True %}
+                <button type="submit" class="btn btn-primary" name="wishList" value="True">Remove Item From Watchlist</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary" name="wishList" value="True">Add Item To Watchlist</button>
+            {% endif %}
+            </form>
+        {% endif %}
+
+    {% endif %}
+
+    <h3 style="padding-top:20px">Comments:</h3>
+    {% if user.is_authenticated %}
+        <div class="comment-form-container">
+            <form action="{% url 'listings:listing' item.id %}" method="post">
+                {% csrf_token %}
+            
+                    <div class="form-group">
+                        {{ commentForm.user_comment }}
+                    </div>
+                
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" Value="Comment">
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+    {% for comment in comments %}
+        <b>{{ comment.user.username }}</b>
+        <i>{{ comment.comment_time }}</i>
+        <p>{{ comment.comment }}</p>
+    {% endfor %}
 
 {% endblock %}

@@ -1,4 +1,6 @@
-from .models import User, Item, ItemDescription
+from .models import User, Item, ItemDescription, UserComment
+
+from listings.views import NewCommentForm, NewBidForm, WishlistForm
 
 def addItem(form, user):
     item = Item.objects.create(
@@ -13,3 +15,14 @@ def addItem(form, user):
         item_description=form["item_description"]
     )
     return item
+
+def addComment(form, user, item_id):
+    comment = UserComment.objects.create(
+        item=item_id,
+        user=user,
+        comment=form["user_comment"])
+    return comment
+
+def getListingForms():
+    forms = [NewCommentForm(), NewBidForm(), WishlistForm()]
+    return forms

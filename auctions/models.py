@@ -21,6 +21,7 @@ class Item(models.Model):
     item_current_bid = models.DecimalField(decimal_places=2, max_digits=19, null=True)
     item_posted_time = models.DateTimeField(auto_now_add=True)
     item_last_updated = models.DateTimeField(auto_now=True)
+    item_sold = models.BooleanField(default=False)
 
     class item_type(models.TextChoices):
         AllCategories = 'AC', _('All Categories')
@@ -94,6 +95,14 @@ class UserComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_comment")
     item = models.PositiveIntegerField(Item)
     comment = models.CharField(max_length=500)
+    comment_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"User:{self.user.id} Item:{self.item.id} Comment:{self.comment}"
+
+class UserWatchList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.PositiveIntegerField(Item)
+
+    def __str__(self):
+        return f"User:{self.user.id} Item:{self.item.id}"
