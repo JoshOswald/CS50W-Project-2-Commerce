@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'auctions',
     'listings',
     'categories',
+    'watchlist',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

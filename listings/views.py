@@ -59,7 +59,7 @@ def listing(request, item_id):
             wishListed = WatchList.objects.get(user=user, item=item.id)
             #forms[2] = WishlistForm(initial={'wishList': True})
         except WatchList.DoesNotExist:
-            pass
+            wishListed = None
 
         if request.method == "POST":
             #ITEM OWNER STUFF
@@ -151,13 +151,12 @@ def listing(request, item_id):
                 if "bid" in request.POST:
                     return bid(request, item, max_bid, bids)
                 if "wishList" in request.POST:
-                    try:
-                        watchListFrom = WatchList.objects.get(user=user, item=item.id)
-                        watchListFrom.delete()
+                    if wishListed is not None:
+                        wishListed.delete()
+                        wishListed = None
                         message = "Item Has Been Removed From Wishlist."
-                    except WatchList.DoesNotExist:
-                        WatchList.objects.create(user=user, item=item.id)
-                        wishListed = True
+                    else:
+                        wishListed = WatchList.objects.create(user=user, item=item.id)
                         message = "Item Has Been Added To Wishlist."
                     return render(request, "listings/listing.html", {
                             "item": item,

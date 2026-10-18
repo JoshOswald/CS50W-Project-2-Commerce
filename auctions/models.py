@@ -67,21 +67,21 @@ class Item(models.Model):
         )
 
     def __str__(self):
-        return f"{self.id} {self.item_name}"
+        return f"ID: {self.id} Name: '{self.item_name}'"
 
 class WatchList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="item_ref")
     item = models.PositiveIntegerField(Item)
 
     def __str__(self):
-        return f"{self.user.id} {self.item.id}"
+        return f"{self.user.username}, Item ID: {self.item}"
 
 class ItemDescription(models.Model):
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
     item_description = models.CharField(max_length=1000)
 
     def __str__(self):
-        return f"{self.item.id} {self.item_description}"
+        return f"ID: {self.item.id} Name: '{self.item.item_name}'"
 
 class ItemBid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bidding")
@@ -89,7 +89,7 @@ class ItemBid(models.Model):
     bid = models.DecimalField(decimal_places=2, max_digits=19)
 
     def __str__(self):
-        return f"User:{self.user.id} Item:{self.item.id} Bid:{self.bid}"
+        return f"User: {self.user.id}, Item ID: {self.item}, Bid: {self.bid}"
 
 class UserComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_comment")
@@ -98,11 +98,4 @@ class UserComment(models.Model):
     comment_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"User:{self.user.id} Item:{self.item.id} Comment:{self.comment}"
-
-class UserWatchList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.PositiveIntegerField(Item)
-
-    def __str__(self):
-        return f"User:{self.user.id} Item:{self.item.id}"
+        return f"{self.user.username}, Item: {self.item}, '{self.comment}'"

@@ -70,7 +70,7 @@
         {% if wishListForm %}
             <form method="post">
             {% csrf_token %}
-            {% if wishListed == True %}
+            {% if wishListed != None %}
                 <button type="submit" class="btn btn-primary" name="wishList" value="True">Remove Item From Watchlist</button>
             {% else %}
                 <button type="submit" class="btn btn-primary" name="wishList" value="True">Add Item To Watchlist</button>
