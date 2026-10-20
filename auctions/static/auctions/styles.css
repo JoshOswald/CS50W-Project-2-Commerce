@@ -17,8 +17,8 @@ body {
 }
 
 div.index-listing-container {
-    max-width: 30vw;
-    max-height: 30vw;
+    width: fit-content;
+    height: fit-content;
     background-color: rgb(208, 223, 247);
     border-radius: 10px;
     border: 3px solid transparent;

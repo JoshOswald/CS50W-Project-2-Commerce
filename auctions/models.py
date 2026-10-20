@@ -16,12 +16,23 @@ class Item(models.Model):
     #item_id auto created by django
     item_owner = models.ForeignKey(User, to_field='id', on_delete=models.CASCADE, related_name="owned_item")
     item_name = models.CharField(max_length=64)
-    item_image_link = models.CharField(max_length=64)
+    item_image_link = models.CharField(max_length=500)
     item_starting_bid = models.DecimalField(decimal_places=2, max_digits=19)
-    item_current_bid = models.DecimalField(decimal_places=2, max_digits=19, null=True)
+    #item_current_bid = models.DecimalField(decimal_places=2, max_digits=19, null=True)
     item_posted_time = models.DateTimeField(auto_now_add=True)
     item_last_updated = models.DateTimeField(auto_now=True)
     item_sold = models.BooleanField(default=False)
+
+    @property
+    def item_current_bid(self):
+        highest_bid = ItemBid.objects.filter(
+            item=self.id
+        ).order_by('-bid').first()
+    
+        if highest_bid:
+            return highest_bid.bid
+    
+        return self.item_starting_bid
 
     class item_type(models.TextChoices):
         AllCategories = 'AC', _('All Categories')

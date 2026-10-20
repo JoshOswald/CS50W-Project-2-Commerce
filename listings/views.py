@@ -303,7 +303,6 @@ def bid(request, item, max_bid, bids):
         #If bid is higher
         else:
             ItemBid.objects.create(item=item.id,user=user,bid=form.cleaned_data["bid"])
-            item.item_current_bid = bid_amount
             item.save()
             return render(request, "listings/listing.html", {
                     "item": item,
