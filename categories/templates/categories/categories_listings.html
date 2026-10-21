@@ -23,7 +23,14 @@
                             {% if item.item_image_link %}
                                 <img class="index-img" src="{{ item.item_image_link }}">
                             {% endif %}
-                            <p class="listing-text"><b>Price:</b> ${{ item.item_current_bid }}<br>{{ item.itemdescription.item_description }}</p>
+
+                            {% if item.item_current_bid is None %}
+                                <p class="listing-text">Bidding Starts At: <span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ item.item_starting_bid }}</b></span></p>
+                            {% else %}
+                                <p class="listing-text"><h2><b class="listing-text">${{ item.item_current_bid }}</b></h2>
+                            {% endif %}
+                            
+                            <p class="listing-text">{{ item.itemdescription.item_description }}</p>
                         </div>
                     </a>
                 </div>

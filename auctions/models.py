@@ -32,7 +32,7 @@ class Item(models.Model):
         if highest_bid:
             return highest_bid.bid
     
-        return self.item_starting_bid
+        return None
 
     class item_type(models.TextChoices):
         AllCategories = 'AC', _('All Categories')

@@ -33,7 +33,7 @@
     <b>Category:</b> {{ item.get_item_type_display }}
 
     {% if item.item_current_bid is None %}
-        <p class="listing-text">Starting Bid:<span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ item.item_starting_bid }}</b></span></p>
+        <p class="listing-text">Bidding Starts At: <span style="font-size: 1.5em; margin-right: 10px;"><b> ${{ item.item_starting_bid }}</b></span></p>
     {% else %}
         <p class="listing-text"><h2><b>${{ item.item_current_bid }}</b></h2>
     {% endif %}

@@ -261,8 +261,6 @@ def bid(request, item, max_bid, bids):
         if item.item_current_bid == None:
             if bid_amount == item.item_starting_bid or bid_amount > item.item_starting_bid:
                 ItemBid.objects.create(item=item.id,user=user,bid=form.cleaned_data["bid"])
-                item.item_current_bid = bid_amount
-                item.save()
                 return render(request, "listings/listing.html", {
                         "item": item,
                         "bids": len(bids),
